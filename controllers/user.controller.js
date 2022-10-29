@@ -67,7 +67,7 @@ class UserController {
     }
   }
 
-  static async udpdate(req, res) {
+  static async update(req, res) {
     try {
       const { email, full_name } = req.body;
       const id = req.params.userId;
