@@ -14,7 +14,7 @@ const authentication = async (req, res, next) => {
       const user = await User.findByPk(result.id);
       if (user.email == result.email) {
         res.locals.user = result
-        next()
+        return next()
       }
       throw new AuthenticationError('Credential invalid.');
     }

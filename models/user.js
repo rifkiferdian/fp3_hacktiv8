@@ -55,8 +55,10 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {
           msg: 'password cannot be null.'
         },
-        min: 6,
-        max: 10
+        len: {
+          args: [6, 10],
+          msg: 'password must be at least 4 character and most 10 characters'
+        }
       }
     },
     gender: {
@@ -106,8 +108,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
     hooks: {
-      beforeCreate: (user, options) => {
+      beforeValidate: (user, options) => {
         user.balance = 0;
+      },
+      beforeCreate: (user, options) => {
         const hashedPassword = hashPassword(user.password)
         user.password = hashedPassword;
       }

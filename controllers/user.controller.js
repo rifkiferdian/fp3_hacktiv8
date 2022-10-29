@@ -12,7 +12,8 @@ class UserController {
         email: req.body.email,
         password: req.body.password,
         gender: req.body.gender,
-        role: 1
+        role: 1,
+        balance: null,
       };
       const user = await User.create(data, {
         returning: true,
@@ -76,7 +77,15 @@ class UserController {
           'id', 'full_name', 'email', 'createdAt', 'updatedAt'
         ]
       });
-      return res.status(200).json({ user });
+      return res.status(200).json({
+        user: {
+          id: user[1][0].id,
+          full_name: user[1][0].full_name,
+          email: user[1][0].email,
+          createdAt: user[1][0].createdAt,
+          updatedAt: user[1][0].updatedAt
+        }
+      });
     } catch (error) {
       if (error.name == 'SequelizeValidationError') {
         return res.status(422).json({
@@ -108,12 +117,9 @@ class UserController {
 
   static async topup(req, res) {
     try {
-      const user = await User.increment('balance', {
-        by: req.body.balance,
-        where: { id: res.locals.user.id },
-        returning: true,
-        attributes: ['balance']
-      });
+      const user = await User.findByPk(res.locals.user.id);
+      await user.increment('balance', {by: req.body.balance});
+      user.reload();
       res.status(200).json({ message: `Your balance has been successfully updated to Rp ${user.balance.toLocaleString('id-ID')}` })
     } catch (error) {
       console.error(error);
