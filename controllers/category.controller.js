@@ -32,7 +32,7 @@ class CategoryController {
     try {
       const id = +req.params.categoryId;
       const category = await Category.update({ type: req.body.type }, { where: { id }, returning: true });
-      res.status(200).json({ category });
+      res.status(200).json({ category: category[1][0] });
     } catch (error) {
       if (error.name == 'SequelizeValidationError') {
         return res.status(422).json({
