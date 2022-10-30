@@ -15,15 +15,10 @@ class UserController {
         role: 1,
         balance: null,
       };
-      const user = await User.create(data, {
+      const {id, full_name, email, gender, balance, createdAt} = await User.create(data, {
         returning: true,
-        attributes: [
-          'id', 'full_name', 'email', 'gender', 'balance', 'createdAt'
-        ]
       });
-      return res.status(201).json({
-        user,
-      });
+      return res.status(201).json({user: {id, full_name, email, gender, balance, createdAt}});
     } catch (error) {
       if (error.name == 'SequelizeValidationError') {
         return res.status(422).json({
