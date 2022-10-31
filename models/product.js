@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+
+const { convert_rupiah } = require("../helpers/helper");
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     /**

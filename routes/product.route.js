@@ -3,13 +3,13 @@ var router = express.Router();
 
 const ProductController = require("../controllers/product.controller");
 const authentication = require('../middlewares/authentication');
-const authorizationCategory = require('../middlewares/category.authorization');
+const authorizationAdmin = require('../middlewares/admin.authorization');
 
-router.use(authentication, authorizationCategory);
-router.post('/', ProductController.create)
+router.use(authentication);
+router.post('/',authorizationAdmin, ProductController.create)
 router.get('/', ProductController.getAll)
-router.put('/:productId', ProductController.updatePut);
-router.patch('/:productId', ProductController.updatePatch);
-router.delete('/:productId', ProductController.delete);
+router.put('/:productId',authorizationAdmin, ProductController.updatePut);
+router.patch('/:productId',authorizationAdmin, ProductController.updatePatch);
+router.delete('/:productId',authorizationAdmin, ProductController.delete);
 
 module.exports = router;

@@ -108,12 +108,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
     hooks: {
-      beforeValidate: (user, options) => {
-        user.balance = 0;
-      },
       beforeCreate: (user, options) => {
         const hashedPassword = hashPassword(user.password)
         user.password = hashedPassword;
+        user.balance = 0;
       }
     }
   });

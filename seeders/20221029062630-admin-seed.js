@@ -13,6 +13,15 @@ module.exports = {
       balance: 0,
       createdAt: new Date(),
       updatedAt: new Date()
+    },{
+      full_name: 'kelompok 33',
+      email: 'kelompok33@gmail.com',
+      gender: 'female',
+      password: hashPassword('kelompok3jaya!'),
+      role: 1,
+      balance: 0,
+      createdAt: new Date(),
+      updatedAt: new Date()
     }])
   },
 

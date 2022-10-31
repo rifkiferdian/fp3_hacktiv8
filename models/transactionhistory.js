@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+
+const { convert_rupiah } = require("../helpers/helper");
 module.exports = (sequelize, DataTypes) => {
   class TransactionHistory extends Model {
     /**
@@ -10,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.Product);
+      this.belongsTo(models.User);
     }
   }
   TransactionHistory.init({
@@ -34,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
     total_price: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      get() {
+        const rawValue = this.getDataValue('total_price');
+        return convert_rupiah(rawValue);
+      },
       validate: {
         isInt: {
           msg: 'quantity must be a number.'

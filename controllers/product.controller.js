@@ -6,7 +6,7 @@ class ProductController {
   static async create(req, res) {
     try {
         const product = await Product.create(req.body , { returning: true });
-        res.status(201).json({ product: product });
+        res.status(201).json({ product });
     } catch (error) {
       if (error.name == 'SequelizeValidationError') {
         return res.status(422).json({

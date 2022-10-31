@@ -1,5 +1,5 @@
-Final Project 2 Hacktiv8
-Membuat API dengan database POstgreSQL
+Final Project 3 Hacktiv8
+Membuat API dengan database PostgreSQL
 
 🌱 Kelompok 3
 
