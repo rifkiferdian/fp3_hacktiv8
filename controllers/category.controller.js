@@ -3,7 +3,7 @@ class CategoryController {
   static async create(req, res) {
     try {
       const category = await Category.create({ type: req.body.type }, { returning: true });
-      res.status(200).json({ category });
+      res.status(201).json({ category });
     } catch (error) {
       if (error.name == 'SequelizeValidationError') {
         return res.status(422).json({
