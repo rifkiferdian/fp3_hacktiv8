@@ -1,4 +1,6 @@
 const { Category, Product } = require('../models');
+const ClientError = require("../exceptions/ClientError");
+const NotFoundError = require("../exceptions/NotFoundError");
 class CategoryController {
   static async create(req, res) {
     try {
@@ -31,7 +33,11 @@ class CategoryController {
   static async update(req, res) {
     try {
       const id = +req.params.categoryId;
-      const category = await Category.update({ type: req.body.type }, { where: { id }, returning: true });
+      const category = await Category.findByPk(id);
+      if(!category) {
+        throw new NotFoundError('Category not found.');
+      }
+      await category.update({ type: req.body.type }, { where: { id }, returning: true });
       res.status(200).json({ category: category[1][0] });
     } catch (error) {
       if (error.name == 'SequelizeValidationError') {
@@ -45,6 +51,9 @@ class CategoryController {
           status: 'fail',
           errors: error.errors.map(e => e.message)
         })
+      }
+      if(error instanceof ClientError) {
+        return res.status(error.statusCode).json({ status: 'fail', message: error.message });
       }
       console.error(error);
       res.status(500).json({ status: 'fail', message: 'Internal server error' });

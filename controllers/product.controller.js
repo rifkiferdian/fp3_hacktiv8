@@ -32,7 +32,7 @@ class ProductController {
     try {
       const id = +req.params.productId;
       const produk = await Product.update(req.body, { where: { id }, returning: true });
-      res.status(200).json({ Product: produk[1][0] });
+      res.status(200).json({ product: produk[1][0] });
     } catch (error) {
       if (error.name == 'SequelizeValidationError') {
         return res.status(422).json({

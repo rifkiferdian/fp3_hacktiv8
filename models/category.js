@@ -31,13 +31,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'type cannot be null.'
+          msg: 'sold_product_amount cannot be null.'
         },
         notEmpty: {
-          msg: 'type cannot be empty.'
+          msg: 'sold_product_amount cannot be empty.'
         },
         isInt: {
-          msg: 'type must be integer.'
+          msg: 'sold_product_amount must be integer.'
         }
       }
     }
@@ -45,9 +45,9 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Category',
     hooks: {
-      beforeCreate: (category, options) => {
+      beforeValidate: (category, options) => {
         category.sold_product_amount = 0;
-      }
+      },
     }
   });
   return Category;

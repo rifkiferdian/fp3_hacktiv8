@@ -3,6 +3,7 @@ const { comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
 const ClientError = require('../exceptions/ClientError');
 const InvariantError = require('../exceptions/InvariantError');
+const { convert_rupiah } = require('../helpers/helper');
 
 class UserController {
   static async register(req, res) {
@@ -115,7 +116,7 @@ class UserController {
       const user = await User.findByPk(res.locals.user.id);
       await user.increment('balance', {by: req.body.balance});
       user.reload();
-      res.status(200).json({ message: `Your balance has been successfully updated to Rp ${user.balance.toLocaleString('id-ID')}` })
+      res.status(200).json({ message: `Your balance has been successfully updated to Rp ${convert_rupiah(user.balance)}` })
     } catch (error) {
       console.error(error);
       res.status(500).json({ status: 'fail', message: 'Internal server error' });
