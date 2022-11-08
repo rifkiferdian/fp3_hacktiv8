@@ -31,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      get() {
+        const rawValue = this.getDataValue('price');
+        return convert_rupiah(rawValue);
+      },
       validate: {
         isInt: {
           msg: 'price must be number.'
