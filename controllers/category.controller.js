@@ -38,7 +38,7 @@ class CategoryController {
         throw new NotFoundError('Category not found.');
       }
       await category.update({ type: req.body.type }, { where: { id }, returning: true });
-      res.status(200).json({ category: category[1][0] });
+      res.status(200).json({ category });
     } catch (error) {
       if (error.name == 'SequelizeValidationError') {
         return res.status(422).json({
