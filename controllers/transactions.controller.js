@@ -1,7 +1,7 @@
 const { Category, Product, TransactionHistory, User } = require('../models');
 const ClientError = require('../exceptions/ClientError');
 const InvariantError = require('../exceptions/InvariantError');
-const { convert_rupiah } = require("../helpers/helper");
+const { convert_rupiah, reformat } = require("../helpers/helper");
 
 class transactionsController {
     static async create(req, res) {
@@ -19,7 +19,7 @@ class transactionsController {
                 throw new InvariantError('Quantity exceeds stock limit !');
             }
 
-            const hargaProduct = product.price * quantity
+            const hargaProduct = reformat(product.price) * quantity
 
             const user = await User.findOne({ where: { id: UserId } });
             if (user.balance < hargaProduct) {

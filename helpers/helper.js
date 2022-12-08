@@ -1,10 +1,12 @@
 const convert_rupiah = (number) => {
-    return new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR"
-    }).format(number);
+    return `Rp ${new Intl.NumberFormat("id-ID").format(number)}`;
+}
+
+const reformat = (currency) => {
+  return parseInt(currency.split(' ')[1].split('.').join(''));
 }
 
 module.exports = {
-    convert_rupiah
+    convert_rupiah,
+    reformat
 };
