@@ -3,7 +3,7 @@ const ClientError = require('../exceptions/ClientError');
 const InvariantError = require('../exceptions/InvariantError');
 const { convert_rupiah, reformat } = require("../helpers/helper");
 
-class transactionsController {
+class TransactionsController {
     static async create(req, res) {
         try {
             const UserId = +res.locals.user.id
@@ -118,4 +118,4 @@ class transactionsController {
 
 }
 
-module.exports = transactionsController;
+module.exports = TransactionsController;
